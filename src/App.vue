@@ -177,7 +177,7 @@ async function addCard(name: string | null = null) {
 
 // Return a small CardData type from the massive scryfall json
 async function cardFromData(
-  cardData,
+  cardData:any,
   supposedToBeFoil: boolean,
   alreadyCheckedPrints: boolean | undefined = undefined
 ): Promise<CardData> {
@@ -225,7 +225,7 @@ async function openCardSwitchDialog() {
   switchCards.value = []
   cardSwitchDialogIsOpen.value = true;
   while (hasNextPage) {
-    let response = await fetch(latestCard.value.switch_url);
+    let response = await fetch(nextPage);
     if (!response.ok) {
       errorMsg.value = "A loading error occured";
       return;
@@ -234,7 +234,7 @@ async function openCardSwitchDialog() {
     hasNextPage = cardData.has_more
     nextPage = cardData.next_page
     const promises = await cardData.data.map(
-      async (data) =>
+      async (data:any) =>
         await cardFromData(
           data,
           latestCard.value !== null && latestCard.value.foil,
