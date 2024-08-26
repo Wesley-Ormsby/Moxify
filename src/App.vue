@@ -53,7 +53,12 @@ let inputEl: null | HTMLInputElement = null;
 // Set up toast
 const toast = useToast();
 const showToast = (head: string, msg: string) => {
-  toast.add({ severity: "secondary", summary: head, detail: msg, life: 3000 });
+  toast.add({
+    severity: "secondary",
+    summary: head,
+    detail: msg,
+    life: 3000 + 10000000,
+  });
 };
 let cardNames: string[] = [];
 
@@ -177,7 +182,7 @@ async function addCard(name: string | null = null) {
 
 // Return a small CardData type from the massive scryfall json
 async function cardFromData(
-  cardData:any,
+  cardData: any,
   supposedToBeFoil: boolean,
   alreadyCheckedPrints: boolean | undefined = undefined
 ): Promise<CardData> {
@@ -222,7 +227,7 @@ async function openCardSwitchDialog() {
   if (!latestCard.value) return;
   let hasNextPage = true;
   let nextPage = latestCard.value.switch_url;
-  switchCards.value = []
+  switchCards.value = [];
   cardSwitchDialogIsOpen.value = true;
   while (hasNextPage) {
     let response = await fetch(nextPage);
@@ -231,10 +236,10 @@ async function openCardSwitchDialog() {
       return;
     }
     const cardData = await response.json();
-    hasNextPage = cardData.has_more
-    nextPage = cardData.next_page
+    hasNextPage = cardData.has_more;
+    nextPage = cardData.next_page;
     const promises = await cardData.data.map(
-      async (data:any) =>
+      async (data: any) =>
         await cardFromData(
           data,
           latestCard.value !== null && latestCard.value.foil,
@@ -242,7 +247,7 @@ async function openCardSwitchDialog() {
         )
     );
     Promise.all(promises).then((values) => {
-      if(switchCards.value) switchCards.value.push(...values);
+      if (switchCards.value) switchCards.value.push(...values);
     });
   }
 }
@@ -355,7 +360,12 @@ function addSelectedCard() {
           symbol for basics (<code>w</code>, <code>u</code>, <code>b</code>,
           <code>r</code>, <code>g</code>, <code>c</code>):
           <InputGroup>
-            <InputText placeholder="Keyword" v-model="input" id="inputEl" />
+            <InputText
+              placeholder="Keyword"
+              v-model="input"
+              id="inputEl"
+              autocorrect="false"
+            />
             <Button :loading="loadingCard" :disabled="false" @click="addCard">
               <template #icon><Search /></template>
             </Button>
@@ -488,7 +498,7 @@ function addSelectedCard() {
     v-model:visible="cardSwitchDialogIsOpen"
     modal
     header="Select Your Printing"
-    :style="{ width: '50%' }"
+    :style="{ width: '80%' }"
   >
     <div class="card-flex">
       <CardImage
@@ -511,7 +521,7 @@ function addSelectedCard() {
     v-model:visible="viewDeckDialogIsOpen"
     modal
     header="Click A Card To Remove It From Your Deck"
-    :style="{ width: '50%' }"
+    :style="{ width: '80%' }"
   >
     <div class="card-flex">
       <CardImage
@@ -579,7 +589,12 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  margin: 60px 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  * {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
 }
 .foil {
   mask: linear-gradient(135deg, #000c 40%, #000, #000c 60%) 100% 100%/ /* initial position, bottom-right */
@@ -619,5 +634,29 @@ label {
   font-size: larger;
   line-height: 1.5;
 }
-</style>
 
+@media only screen and (max-width: 740px) {
+  label {
+    font-size: small;
+  }
+  h1 {
+    font-size: 4em;
+  }
+  .vert-menu {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .vert-menu:deep(.p-button) {
+    width: 35px;
+    height: 35px;
+    padding: 7px;
+  }
+}
+@media only screen and (max-width:530px) {
+  .vert-menu:deep(.p-button) {
+    width: 25px;
+    height: 25px;
+    padding: 5px;
+  }
+}
+</style>
