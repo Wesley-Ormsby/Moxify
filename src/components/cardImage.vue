@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, type Ref } from "vue"
+import { ref, onMounted, watch, type Ref } from "vue"
 import Skeleton from 'primevue/skeleton';
 const props = defineProps<{ src: string|null, width:number, clickFunction?:Function, clickFunctionParms?:Array<any>}>()
 const loaded = ref(false)
@@ -13,6 +13,10 @@ function runClickFunction() {
         props.clickFunction(...(props.clickFunctionParms || []))
     }
 }
+watch(() => props.src,
+  () => {
+    loaded.value = false;
+  })
 </script>
 
 

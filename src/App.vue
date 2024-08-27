@@ -52,12 +52,17 @@ let inputEl: null | HTMLInputElement = null;
 
 // Set up toast
 const toast = useToast();
-const showToast = (head: string, msg: string) => {
+const showToast = (head: string, msg: string, group: string) => {
+  let severity: "error" | "secondary" = "secondary";
+  if (group === "error") {
+    severity = "error";
+  }
   toast.add({
-    severity: "secondary",
+    severity,
     summary: head,
     detail: msg,
-    life: 3000 + 10000000,
+    life: 3000,
+    group,
   });
 };
 let cardNames: string[] = [];
@@ -311,12 +316,13 @@ function copyDeck() {
   }
   navigator.clipboard.writeText(txt).then(
     function () {
-      showToast("Copied", "Your deck has been copied");
+      showToast("Copied", "Your deck has been copied", "copy");
     },
     function (err) {
       showToast(
         "Could Not Copy Text",
-        "See the developer tools console for details"
+        "See the developer tools console for details",
+        "error"
       );
       console.log(txt);
       console.log(err);
@@ -346,9 +352,10 @@ function addSelectedCard() {
 <template>
   <!-- waraper to center screen -->
   <div class="wraper">
-    <Toast>
-      <template #icon><Trash2></Trash2></template>
+    <Toast group="copy">
+      <template #icon><ClipboardCopy></ClipboardCopy></template>
     </Toast>
+    <Toast group="error"></Toast>
     <h1>Moxify</h1>
     <!-- The input box and listbox -->
     <form @submit.prevent="addCard()">
@@ -652,7 +659,7 @@ label {
     padding: 7px;
   }
 }
-@media only screen and (max-width:530px) {
+@media only screen and (max-width: 530px) {
   .vert-menu:deep(.p-button) {
     width: 25px;
     height: 25px;
@@ -660,3 +667,8 @@ label {
   }
 }
 </style>
+
+<!--
+- Notification switch icons
+- loading on card face, style?
+-->
