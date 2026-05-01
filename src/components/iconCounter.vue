@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineModel } from "vue";
 const model = defineModel({ default: 0 });
 import InputNumber from "primevue/inputnumber";
 const props = defineProps<{ src: string }>();
@@ -19,7 +18,8 @@ const props = defineProps<{ src: string }>();
   width: 100px;
   height: 42px;
   border-radius: 25px;
-  background-color: var(--p-surface-800);
+  background-color: var(--p-surface-950);
+  border: 1px solid var(--p-surface-700);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -29,14 +29,14 @@ const props = defineProps<{ src: string }>();
 
 img {
   height: 35px;
-  margin-left: 5px;
+  margin-left: 3px;
 }
 .input,
 .input * {
   width: 40px;
   background-color: transparent;
   border: transparent;
-  font-size: 30px;
+  font-size: 28px;
   padding: 0px;
   margin: 0px;
 

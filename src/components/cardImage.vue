@@ -1,43 +1,60 @@
 <script setup lang="ts">
-import { ref, onMounted, watch, type Ref } from "vue"
-import Skeleton from 'primevue/skeleton';
-const props = defineProps<{ src: string|null, width:number, clickFunction?:Function, clickFunctionParms?:Array<any>}>()
-const loaded = ref(false)
-const div: Ref<null|HTMLElement> = ref(null)
+import { ref, onMounted, watch, type Ref } from "vue";
+import Skeleton from "primevue/skeleton";
+const props = defineProps<{
+  src: string | null;
+  width: number;
+  clickFunction?: Function;
+  clickFunctionParams?: Array<any>;
+}>();
+const loaded = ref(false);
+const div: Ref<null | HTMLElement> = ref(null);
 onMounted(() => {
-    if(div.value) div.value.style.setProperty("--width", props.width + "px");
-})
+  if (div.value) div.value.style.setProperty("--width", props.width + "px");
+});
 
 function runClickFunction() {
-    if(props.clickFunction) {
-        props.clickFunction(...(props.clickFunctionParms || []))
-    }
+  if (props.clickFunction) {
+    props.clickFunction(...(props.clickFunctionParams || []));
+  }
 }
-watch(() => props.src,
+watch(
+  () => props.src,
   () => {
     loaded.value = false;
-  })
+  },
+);
 </script>
-
 
 <template>
   <div ref="div">
-    <Skeleton v-show="src===null || !loaded" height="'auto'"></Skeleton>
-    <img :src="src || undefined" v-show="src && loaded" @load="loaded=true" @click="runClickFunction">
+    <Skeleton v-if="src && !loaded" height="'auto'"></Skeleton>
+    <img
+      :class="{ pointer: clickFunction }"
+      :src="src || undefined"
+      v-show="src && loaded"
+      @load="loaded = true"
+      @click="runClickFunction"
+    />
   </div>
-  
-
 </template>
 
 <style scoped>
 div {
-    --width:300px;
-    width:var(--width);
-    aspect-ratio: 2.5 / 3.5;
-    height:auto;
+  --width: 300px;
+  width: var(--width);
+  aspect-ratio: 2.5 / 3.5;
+  height: auto;
+  background-color: var(--p-surface-800);
+  border-radius: 4%;
+  overflow: hidden;
 }
-img, skeleton {
-    width:100%;
-    height:100%;
+img,
+skeleton {
+  width: 100%;
+  height: 100%;
+}
+.pointer {
+  cursor: pointer;
 }
 </style>
