@@ -35,6 +35,10 @@ code {
   gap:5px;
 }
 
+.small-card {
+  width:160px;
+}
+
 .card-flex {
   display: flex;
   flex-wrap: wrap;

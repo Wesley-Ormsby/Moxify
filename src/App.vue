@@ -62,8 +62,7 @@ onMounted(async () => {
       </div>
       <CardImage
         :src="latestCard ? latestCard.imgURL : null"
-        :width="300"
-        :class="{ foil: latestCard && latestCard.foil }"
+        :class="{ foil: latestCard && latestCard.foil, 'display-card':true}"
       ></CardImage>
       <SideMenu></SideMenu>
     </div>
@@ -75,6 +74,9 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.display-card {
+  width:300px;
+}
 .p-progressbar {
   border-radius: 0px;
 }
@@ -115,6 +117,9 @@ h1 {
 }
 
 @media only screen and (max-width: 740px) {
+  .display-card {
+  width:250px;
+}
   label {
     font-size: small;
   }
@@ -131,12 +136,23 @@ h1 {
     height: 35px;
     padding: 7px;
   }
+  .error-msg {
+    margin-top:5px;
+    margin-bottom:5px;
+    font-size: smaller;
+  }
 }
-@media only screen and (max-width: 530px) {
+@media only screen and (max-width: 500px) {
+  .display-card {
+  width:150px;
+}
   .vert-menu:deep(.p-button) {
     width: 25px;
     height: 25px;
     padding: 5px;
+  }
+  .error-msg {
+    font-size: x-small;
   }
 }
 </style>

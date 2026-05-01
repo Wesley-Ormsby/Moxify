@@ -28,7 +28,7 @@ function removeCardAtIndex(index: number) {
         :src="card.imgURL"
         :clickFunction="removeCardAtIndex"
         :clickFunctionParams="[i]"
-        :width="160"
+        class="small-card"
       ></CardImage>
     </div>
     <template #footer>

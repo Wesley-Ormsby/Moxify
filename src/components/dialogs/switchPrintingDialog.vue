@@ -66,7 +66,7 @@ async function openCardSwitchDialog() {
         :src="card.imgURL"
         :clickFunction="switchPrint"
         :clickFunctionParams="[card.set, card.collector_number, card.imgURL]"
-        :width="160"
+        class="small-card"
       ></CardImage>
     </div>
     <template #footer>
