@@ -11,7 +11,7 @@ export const loading = ref<Boolean>(true);
 export const deck = ref<CardData[]>([]);
 export const errorMsg = ref("&nbsp;");
 export const lands = reactive<Record<LandType, number>>({
-  plain: 0,
+  plains: 0,
   island: 0,
   swamp: 0,
   mountain: 0,

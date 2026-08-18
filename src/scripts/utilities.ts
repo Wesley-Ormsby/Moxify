@@ -5,7 +5,7 @@ export function focusOnInput() {
 }
 
 const charToLandMap: Record<string, LandType> = {
-  w: "plain",
+  w: "plains",
   u: "island",
   b: "swamp",
   r: "mountain",
@@ -18,7 +18,7 @@ export function charToLand(char: string): LandType | null {
 }
 
 const landToCharMap: Record<LandType, string> = {
-  plain: "W",
+  plains: "W",
   island: "U",
   swamp: "B",
   mountain: "R",

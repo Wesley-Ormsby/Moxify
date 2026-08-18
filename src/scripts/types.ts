@@ -10,7 +10,7 @@ export type CardData = {
 };
 
 export const LAND_TYPES = [
-    "plain",
+    "plains",
     "island",
     "swamp",
     "mountain",
